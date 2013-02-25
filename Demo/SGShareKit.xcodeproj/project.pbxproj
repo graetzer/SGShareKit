@@ -1,0 +1,373 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F4625CD316D941A2006B3D62 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4625CD216D941A2006B3D62 /* UIKit.framework */; };
+		F4625CD516D941A2006B3D62 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4625CD416D941A2006B3D62 /* Foundation.framework */; };
+		F4625CD716D941A2006B3D62 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4625CD616D941A2006B3D62 /* CoreGraphics.framework */; };
+		F4625CDD16D941A3006B3D62 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F4625CDB16D941A3006B3D62 /* InfoPlist.strings */; };
+		F4625CDF16D941A3006B3D62 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F4625CDE16D941A3006B3D62 /* main.m */; };
+		F4625CE316D941A3006B3D62 /* SGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F4625CE216D941A3006B3D62 /* SGAppDelegate.m */; };
+		F4625CE516D941A3006B3D62 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = F4625CE416D941A3006B3D62 /* Default.png */; };
+		F4625CE716D941A3006B3D62 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4625CE616D941A3006B3D62 /* Default@2x.png */; };
+		F4625CE916D941A3006B3D62 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4625CE816D941A3006B3D62 /* Default-568h@2x.png */; };
+		F48C5A7816DA9CAA00264CB2 /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = F48C5A6F16DA9CAA00264CB2 /* facebook.png */; };
+		F48C5A7916DA9CAA00264CB2 /* google-plus.png in Resources */ = {isa = PBXBuildFile; fileRef = F48C5A7016DA9CAA00264CB2 /* google-plus.png */; };
+		F48C5A7D16DA9CAA00264CB2 /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = F48C5A7416DA9CAA00264CB2 /* twitter.png */; };
+		F48C5A8316DA9CBD00264CB2 /* SGShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = F48C5A8016DA9CBD00264CB2 /* SGShareView.m */; };
+		F48C5A8616DA9DE000264CB2 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F48C5A8516DA9DE000264CB2 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		F48C5A8816DA9DE700264CB2 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F48C5A8716DA9DE700264CB2 /* Twitter.framework */; };
+		F48C5A8B16DA9F6100264CB2 /* sina_weibo.png in Resources */ = {isa = PBXBuildFile; fileRef = F48C5A8916DA9F6100264CB2 /* sina_weibo.png */; };
+		F48C5A8C16DA9F6100264CB2 /* sina_weibo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F48C5A8A16DA9F6100264CB2 /* sina_weibo@2x.png */; };
+		F48C5A8E16DAA01700264CB2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F48C5A8D16DAA01700264CB2 /* MessageUI.framework */; };
+		F48C5A9116DAA84800264CB2 /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = F48C5A8F16DAA84800264CB2 /* mail.png */; };
+		F48C5A9216DAA84800264CB2 /* mail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F48C5A9016DAA84800264CB2 /* mail@2x.png */; };
+		F48C5A9416DAE66100264CB2 /* facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F48C5A9316DAE66100264CB2 /* facebook@2x.png */; };
+		F48C5A9B16DAF7EB00264CB2 /* SGShareView+UIKit.m in Sources */ = {isa = PBXBuildFile; fileRef = F48C5A9A16DAF7EB00264CB2 /* SGShareView+UIKit.m */; };
+		F48C5A9E16DBAAB800264CB2 /* SGDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F48C5A9D16DBAAB800264CB2 /* SGDemoViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F4625CCF16D941A2006B3D62 /* SGShareKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SGShareKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4625CD216D941A2006B3D62 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		F4625CD416D941A2006B3D62 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F4625CD616D941A2006B3D62 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		F4625CDA16D941A2006B3D62 /* SGShareKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SGShareKit-Info.plist"; sourceTree = "<group>"; };
+		F4625CDC16D941A3006B3D62 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F4625CDE16D941A3006B3D62 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F4625CE016D941A3006B3D62 /* SGShareKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SGShareKit-Prefix.pch"; sourceTree = "<group>"; };
+		F4625CE116D941A3006B3D62 /* SGAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SGAppDelegate.h; sourceTree = "<group>"; };
+		F4625CE216D941A3006B3D62 /* SGAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SGAppDelegate.m; sourceTree = "<group>"; };
+		F4625CE416D941A3006B3D62 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		F4625CE616D941A3006B3D62 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		F4625CE816D941A3006B3D62 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		F48C5A6F16DA9CAA00264CB2 /* facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook.png; sourceTree = "<group>"; };
+		F48C5A7016DA9CAA00264CB2 /* google-plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "google-plus.png"; sourceTree = "<group>"; };
+		F48C5A7416DA9CAA00264CB2 /* twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter.png; sourceTree = "<group>"; };
+		F48C5A7F16DA9CBD00264CB2 /* SGShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGShareView.h; sourceTree = "<group>"; };
+		F48C5A8016DA9CBD00264CB2 /* SGShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGShareView.m; sourceTree = "<group>"; };
+		F48C5A8516DA9DE000264CB2 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		F48C5A8716DA9DE700264CB2 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		F48C5A8916DA9F6100264CB2 /* sina_weibo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sina_weibo.png; sourceTree = "<group>"; };
+		F48C5A8A16DA9F6100264CB2 /* sina_weibo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sina_weibo@2x.png"; sourceTree = "<group>"; };
+		F48C5A8D16DAA01700264CB2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		F48C5A8F16DAA84800264CB2 /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mail.png; sourceTree = "<group>"; };
+		F48C5A9016DAA84800264CB2 /* mail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mail@2x.png"; sourceTree = "<group>"; };
+		F48C5A9316DAE66100264CB2 /* facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook@2x.png"; sourceTree = "<group>"; };
+		F48C5A9916DAF7EB00264CB2 /* SGShareView+UIKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SGShareView+UIKit.h"; sourceTree = "<group>"; };
+		F48C5A9A16DAF7EB00264CB2 /* SGShareView+UIKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SGShareView+UIKit.m"; sourceTree = "<group>"; };
+		F48C5A9C16DBAAB700264CB2 /* SGDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGDemoViewController.h; sourceTree = "<group>"; };
+		F48C5A9D16DBAAB800264CB2 /* SGDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGDemoViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F4625CCC16D941A2006B3D62 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F48C5A8E16DAA01700264CB2 /* MessageUI.framework in Frameworks */,
+				F48C5A8816DA9DE700264CB2 /* Twitter.framework in Frameworks */,
+				F48C5A8616DA9DE000264CB2 /* Social.framework in Frameworks */,
+				F4625CD316D941A2006B3D62 /* UIKit.framework in Frameworks */,
+				F4625CD516D941A2006B3D62 /* Foundation.framework in Frameworks */,
+				F4625CD716D941A2006B3D62 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F4625CC616D941A2006B3D62 = {
+			isa = PBXGroup;
+			children = (
+				F48C5A6B16DA941E00264CB2 /* SGShareKit */,
+				F4625CD816D941A2006B3D62 /* Demo */,
+				F4625CD116D941A2006B3D62 /* Frameworks */,
+				F4625CD016D941A2006B3D62 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F4625CD016D941A2006B3D62 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F4625CCF16D941A2006B3D62 /* SGShareKit.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F4625CD116D941A2006B3D62 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F48C5A8D16DAA01700264CB2 /* MessageUI.framework */,
+				F48C5A8716DA9DE700264CB2 /* Twitter.framework */,
+				F48C5A8516DA9DE000264CB2 /* Social.framework */,
+				F4625CD216D941A2006B3D62 /* UIKit.framework */,
+				F4625CD416D941A2006B3D62 /* Foundation.framework */,
+				F4625CD616D941A2006B3D62 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F4625CD816D941A2006B3D62 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				F4625CD916D941A2006B3D62 /* Supporting Files */,
+				F4625CE116D941A3006B3D62 /* SGAppDelegate.h */,
+				F4625CE216D941A3006B3D62 /* SGAppDelegate.m */,
+				F48C5A9C16DBAAB700264CB2 /* SGDemoViewController.h */,
+				F48C5A9D16DBAAB800264CB2 /* SGDemoViewController.m */,
+			);
+			name = Demo;
+			path = SGShareKit;
+			sourceTree = "<group>";
+		};
+		F4625CD916D941A2006B3D62 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F4625CDA16D941A2006B3D62 /* SGShareKit-Info.plist */,
+				F4625CDB16D941A3006B3D62 /* InfoPlist.strings */,
+				F4625CDE16D941A3006B3D62 /* main.m */,
+				F4625CE016D941A3006B3D62 /* SGShareKit-Prefix.pch */,
+				F4625CE416D941A3006B3D62 /* Default.png */,
+				F4625CE616D941A3006B3D62 /* Default@2x.png */,
+				F4625CE816D941A3006B3D62 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F48C5A6B16DA941E00264CB2 /* SGShareKit */ = {
+			isa = PBXGroup;
+			children = (
+				F48C5A9916DAF7EB00264CB2 /* SGShareView+UIKit.h */,
+				F48C5A9A16DAF7EB00264CB2 /* SGShareView+UIKit.m */,
+				F48C5A7F16DA9CBD00264CB2 /* SGShareView.h */,
+				F48C5A8016DA9CBD00264CB2 /* SGShareView.m */,
+				F48C5A6C16DA9CAA00264CB2 /* icons */,
+			);
+			name = SGShareKit;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		F48C5A6C16DA9CAA00264CB2 /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				F48C5A6F16DA9CAA00264CB2 /* facebook.png */,
+				F48C5A9316DAE66100264CB2 /* facebook@2x.png */,
+				F48C5A8F16DAA84800264CB2 /* mail.png */,
+				F48C5A9016DAA84800264CB2 /* mail@2x.png */,
+				F48C5A8916DA9F6100264CB2 /* sina_weibo.png */,
+				F48C5A8A16DA9F6100264CB2 /* sina_weibo@2x.png */,
+				F48C5A7016DA9CAA00264CB2 /* google-plus.png */,
+				F48C5A7416DA9CAA00264CB2 /* twitter.png */,
+			);
+			path = icons;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F4625CCE16D941A2006B3D62 /* SGShareKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F4625CEC16D941A3006B3D62 /* Build configuration list for PBXNativeTarget "SGShareKit" */;
+			buildPhases = (
+				F4625CCB16D941A2006B3D62 /* Sources */,
+				F4625CCC16D941A2006B3D62 /* Frameworks */,
+				F4625CCD16D941A2006B3D62 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SGShareKit;
+			productName = SGShareKit;
+			productReference = F4625CCF16D941A2006B3D62 /* SGShareKit.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F4625CC716D941A2006B3D62 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = SG;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Simon Peter Grätzer";
+			};
+			buildConfigurationList = F4625CCA16D941A2006B3D62 /* Build configuration list for PBXProject "SGShareKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F4625CC616D941A2006B3D62;
+			productRefGroup = F4625CD016D941A2006B3D62 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F4625CCE16D941A2006B3D62 /* SGShareKit */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F4625CCD16D941A2006B3D62 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4625CDD16D941A3006B3D62 /* InfoPlist.strings in Resources */,
+				F4625CE516D941A3006B3D62 /* Default.png in Resources */,
+				F4625CE716D941A3006B3D62 /* Default@2x.png in Resources */,
+				F4625CE916D941A3006B3D62 /* Default-568h@2x.png in Resources */,
+				F48C5A7816DA9CAA00264CB2 /* facebook.png in Resources */,
+				F48C5A7916DA9CAA00264CB2 /* google-plus.png in Resources */,
+				F48C5A7D16DA9CAA00264CB2 /* twitter.png in Resources */,
+				F48C5A8B16DA9F6100264CB2 /* sina_weibo.png in Resources */,
+				F48C5A8C16DA9F6100264CB2 /* sina_weibo@2x.png in Resources */,
+				F48C5A9116DAA84800264CB2 /* mail.png in Resources */,
+				F48C5A9216DAA84800264CB2 /* mail@2x.png in Resources */,
+				F48C5A9416DAE66100264CB2 /* facebook@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F4625CCB16D941A2006B3D62 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4625CDF16D941A3006B3D62 /* main.m in Sources */,
+				F4625CE316D941A3006B3D62 /* SGAppDelegate.m in Sources */,
+				F48C5A8316DA9CBD00264CB2 /* SGShareView.m in Sources */,
+				F48C5A9B16DAF7EB00264CB2 /* SGShareView+UIKit.m in Sources */,
+				F48C5A9E16DBAAB800264CB2 /* SGDemoViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F4625CDB16D941A3006B3D62 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F4625CDC16D941A3006B3D62 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F4625CEA16D941A3006B3D62 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F4625CEB16D941A3006B3D62 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F4625CED16D941A3006B3D62 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SGShareKit/SGShareKit-Prefix.pch";
+				INFOPLIST_FILE = "SGShareKit/SGShareKit-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		F4625CEE16D941A3006B3D62 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SGShareKit/SGShareKit-Prefix.pch";
+				INFOPLIST_FILE = "SGShareKit/SGShareKit-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F4625CCA16D941A2006B3D62 /* Build configuration list for PBXProject "SGShareKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4625CEA16D941A3006B3D62 /* Debug */,
+				F4625CEB16D941A3006B3D62 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F4625CEC16D941A3006B3D62 /* Build configuration list for PBXNativeTarget "SGShareKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4625CED16D941A3006B3D62 /* Debug */,
+				F4625CEE16D941A3006B3D62 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F4625CC716D941A2006B3D62 /* Project object */;
+}
