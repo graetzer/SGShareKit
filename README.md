@@ -2,6 +2,8 @@
 
 iOS sharing view. Supporting for iOS 6 Social.framework, Twitter.framework, MessageUI.framework
 
+Heavily based on https://github.com/levey/LeveyPopListView
+
 ### Example Usage
 
 SGShareView works like an UIAlertView. For each instance, a new UIWindow is created on top of the main window
