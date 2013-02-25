@@ -39,6 +39,7 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
 @implementation SGShareView {
     NSArray *_options;
     CGRect _bgRect;
+    UIColor *_bgColor;
 }
 
 + (void)addService:(NSString *)name image:(UIImage *)image handler:(SGShareViewCallback)handler {
@@ -101,14 +102,16 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
     if (!self->images)
         images = [NSMutableArray arrayWithCapacity:5];
     
-    [images addObject:image];
+    if (image)
+        [images addObject:image];
 }
 
 - (void)addURL:(NSURL *)url {
     if (!self->urls)
         urls = [NSMutableArray arrayWithCapacity:5];
     
-    [urls addObject:url];
+    if (url)
+        [urls addObject:url];
 }
 
 #pragma mark - Private
@@ -116,6 +119,7 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         _options = [Services copy];
+        _bgColor = [UIColor colorWithWhite:0 alpha:.75];
         
         self.backgroundColor = [UIColor clearColor];
         self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
@@ -222,9 +226,8 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     
     // Draw the background with shadow
-    CGContextSetShadowWithColor(ctx, CGSizeZero, 6., [UIColor colorWithWhite:0 alpha:.75].CGColor);
-    [[UIColor colorWithWhite:0 alpha:.75] setFill];
-    
+    CGContextSetShadowWithColor(ctx, CGSizeZero, 6., _bgColor.CGColor);
+    [_bgColor setFill];
     
     float x = _bgRect.origin.x;
     float y = _bgRect.origin.y;
@@ -244,8 +247,14 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
     // Draw the title and the separator with shadow
     CGContextSetShadowWithColor(ctx, CGSizeMake(0, 1), 0.5f, [UIColor blackColor].CGColor);
     [[UIColor colorWithRed:0.020 green:0.549 blue:0.961 alpha:1.] setFill];
-    [_title drawInRect:titleRect withFont:[UIFont systemFontOfSize:16.]];
+    UIFont *textFont = [UIFont systemFontOfSize:16.];
+    [_title drawInRect:titleRect withFont:textFont];
     CGContextFillRect(ctx, separatorRect);
+    
+    [@"x" drawInRect:titleRect
+            withFont:textFont
+       lineBreakMode:NSLineBreakByCharWrapping
+           alignment:NSTextAlignmentRight];
 }
 
 @end

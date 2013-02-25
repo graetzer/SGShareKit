@@ -49,7 +49,7 @@ typedef void (^SGShareViewCallback)(SGShareView*);
 
 
 @protocol SGShareViewDelegate <NSObject>
-
+@optional
 - (void)shareView:(SGShareView *)shareView didSelectService:(NSString*)name;
 - (void)shareViewDidCancel:(SGShareView *)shareView;
 
