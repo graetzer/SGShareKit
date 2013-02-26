@@ -26,7 +26,6 @@
 // You can partially turn on ARC by adding -fobjc-arc to the build phase for each file.
 #endif
 
-#define POPLISTVIEW_SCREENINSET 40.
 #define POPLISTVIEW_HEADER_HEIGHT 50.
 #define RADIUS 5.
 
@@ -163,11 +162,11 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
     if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPhone)
         _bgRect = CGRectInset(bounds, bounds.size.width/3.3, bounds.size.height/3.3);
     else
-        _bgRect = CGRectInset(bounds, POPLISTVIEW_SCREENINSET, POPLISTVIEW_SCREENINSET);
+        _bgRect = CGRectInset(bounds, bounds.size.width*0.1, bounds.size.height*0.15);
     
     bounds = self.bounds;
     if (_bgRect.size.height > bounds.size.height)
-        _bgRect.size.height = bounds.size.height - POPLISTVIEW_SCREENINSET;
+        _bgRect.size.height = bounds.size.height*0.85;
     
     _bgRect.origin = CGPointMake((bounds.size.width - _bgRect.size.width)/2,
                                  (bounds.size.height - _bgRect.size.height)/2);
