@@ -47,12 +47,12 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
     UIColor *_bgColor;
 }
 
-+ (void)addService:(NSString *)name image:(UIImage *)image handler:(SGShareViewCallback)handler {
++ (void)addService:(NSString *)name imageName:(NSString *)imageName handler:(SGShareViewCallback)handler {
     if (!Services)
         Services = [[NSMutableArray alloc] initWithCapacity:5];
     
-    if (name && image)
-        [Services addObject:@{@"img":image, @"text":name, @"handler" : [handler copy]}];
+    if (name && imageName)
+        [Services addObject:@{@"img":imageName, @"text":name, @"handler" : [handler copy]}];
     else
         [Services addObject:@{@"text":name, @"handler" : [handler copy]}];
 }
@@ -93,7 +93,7 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
             if (self->images)
                 _title  = NSLocalizedString(@"Share Picture", @"Share picture title");
             else
-                _title  = NSLocalizedString(@"Share Link", @"Share url title");
+                _title  = NSLocalizedString(@"Share Page", @"Share url of page");
         } else
             _title = NSLocalizedString(@"Share", @"Share title");
     }
@@ -151,6 +151,7 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
         tableView.backgroundColor = [UIColor clearColor];
         tableView.dataSource = self;
         tableView.delegate = self;
+        tableView.rowHeight = 40;
         [self addSubview:tableView];
         _tableView = tableView;
     }
@@ -171,8 +172,11 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
     _bgRect.origin = CGPointMake((bounds.size.width - _bgRect.size.width)/2,
                                  (bounds.size.height - _bgRect.size.height)/2);
     
-    CGRect tableRect = CGRectOffset(_bgRect, 0, POPLISTVIEW_HEADER_HEIGHT);
+    CGRect tableRect = _bgRect;
+    tableRect.origin.x += 5;
+    tableRect.origin.y += POPLISTVIEW_HEADER_HEIGHT;
     tableRect.size.height -= POPLISTVIEW_HEADER_HEIGHT - RADIUS;
+    tableRect.size.width -= 5;
     self.tableView.frame = tableRect;
 }
 
@@ -191,10 +195,11 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
         cell.backgroundColor = [UIColor clearColor];
         cell.textLabel.textColor = [UIColor whiteColor];
         cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:15.];
+        cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
     }
     
     if ([_options[indexPath.row] respondsToSelector:@selector(objectForKey:)]) {
-        cell.imageView.image = _options[indexPath.row][@"img"];
+        cell.imageView.image = [UIImage imageNamed:_options[indexPath.row][@"img"]];
         cell.textLabel.text = _options[indexPath.row][@"text"];
     } else
         cell.textLabel.text = _options[indexPath.row];
