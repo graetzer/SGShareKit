@@ -20,8 +20,7 @@
 //  limitations under the License.
 
 #import "SGDemoViewController.h"
-#import "SGShareView.h"
-#import "SGShareView+UIKit.h"
+#import "SGActivityView.h"
 
 
 @implementation SGDemoViewController
@@ -45,10 +44,12 @@
 }
 
 - (IBAction)showShareController:(id)sender {
-    SGShareView *share = [SGShareView shareView];
-    share.initialText = @"Hello World!";
-    [share addURL:[NSURL URLWithString:@"http://google.com"]];
-    [share show];
+    NSString *text = @"Hello world";
+    NSURL *url = [NSURL URLWithString:@"http://google.com"];
+    NSURL *mail = [NSURL URLWithString:@"mailto:simon@graetzer.org"];
+    SGActivityView *activity = [[SGActivityView alloc] initWithActivityItems:@[text, url, mail]
+                                                       applicationActivities:nil];
+    [activity show];
 }
 
 @end

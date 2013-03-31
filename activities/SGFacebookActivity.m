@@ -1,8 +1,8 @@
 //
-//  SGShareView+UIKit.h
-//  SGShareKit
+//  SGFacebookActivity.m
+//  Foxbrowser
 //
-//  Created by Simon Grätzer on 25.02.13.
+//  Created by Simon Grätzer on 29.03.13.
 //
 //
 //  Copyright 2013 Simon Peter Grätzer
@@ -19,11 +19,25 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-#import "SGShareView.h"
-#import <Social/Social.h>
-#import <Twitter/Twitter.h>
-#import <MessageUI/MessageUI.h>
+#import "SGFacebookActivity.h"
 
-@interface SGShareView (UIKit)
+@implementation SGFacebookActivity
+
+- (UIImage *)activityImage {
+    return [UIImage imageNamed:@"facebook-icon"];
+}
+
+- (NSString *)activityTitle {
+    return @"Facebook";
+}
+
+- (NSString *)activityType {
+    //NSLog(@"%@",UIActivityTypePostToFacebook);
+    return SGActivityTypePostToFacebook;
+}
+
+- (NSString *)serviceType {
+    return SLServiceTypeFacebook;
+}
 
 @end

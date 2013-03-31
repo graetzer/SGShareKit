@@ -19,7 +19,12 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-#import "SGShareView.h"
+#import "SGActivityView.h"
+#import "SGActivity.h"
+#import "SGFacebookActivity.h"
+#import "SGSinaWeiboActivity.h"
+#import "SGTwitterActivity.h"
+#import "SGMailActivity.h"
 
 #if !__has_feature(objc_arc)
 #error SGShareView must be built with ARC.
@@ -32,114 +37,42 @@
 @interface SGShareViewController : UIViewController
 @end
 
-static NSMutableArray *Services;
 static NSMutableArray *LaunchURLHandler;
+static NSArray *PreconfiguredActivities;
 
-@interface SGShareView ()
+@interface SGActivityView ()
 @property(strong, nonatomic) UIWindow *myWindow;
 @end
 
 CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientation);
 
-@implementation SGShareView {
-    NSArray *_options;
+@implementation SGActivityView {
     CGRect _bgRect;
     UIColor *_bgColor;
-}
-
-+ (void)addService:(NSString *)name imageName:(NSString *)imageName handler:(SGShareViewCallback)handler {
-    if (!Services)
-        Services = [[NSMutableArray alloc] initWithCapacity:5];
     
-    if (name && imageName)
-        [Services addObject:@{@"img":imageName, @"text":name, @"handler" : [handler copy]}];
-    else
-        [Services addObject:@{@"text":name, @"handler" : [handler copy]}];
+    NSArray *_activityItems;
+    NSMutableArray *_applicationActivities;
 }
 
-+ (void)addLaunchURLHandler:(SGShareViewLaunchURLHandler)handler {
-    if (!LaunchURLHandler)
-        LaunchURLHandler = [[NSMutableArray alloc] initWithCapacity:5];
-    [LaunchURLHandler addObject:[handler copy]];
-}
-
-+ (BOOL)handleURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    for (SGShareViewLaunchURLHandler handler in LaunchURLHandler) 
-        if (handler(url, sourceApplication, annotation))
-            return YES;
-    
-    return NO;
-}
-
-+ (SGShareView *)shareView {
-    return [[SGShareView alloc] initWithFrame:CGRectZero];
-}
-
-- (void)show {
-    self.myWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.myWindow.windowLevel = UIWindowLevelAlert;
-    self.myWindow.backgroundColor = [UIColor colorWithWhite:0 alpha:0.24];
-    self.myWindow.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-        
-    UIViewController *vC = [SGShareViewController new];
-    vC.view = self;
-    vC.wantsFullScreenLayout = YES;
-    self.myWindow.rootViewController = vC;
-    [self.myWindow makeKeyAndVisible];
-    [UIViewController attemptRotationToDeviceOrientation];
-
-    if (!_title) {
-        if ((self->images != nil) != (self->urls != nil)) {//Xor
-            if (self->images)
-                _title  = NSLocalizedString(@"Share Picture", @"Share picture title");
-            else
-                _title  = NSLocalizedString(@"Share Page", @"Share url of page");
-        } else
-            _title = NSLocalizedString(@"Share", @"Share title");
++ (void)initialize {
+    if (NSClassFromString(@"SLComposeViewController")) {// iOS 6+
+        PreconfiguredActivities = @[[SGFacebookActivity new], [SGSinaWeiboActivity new],
+                                    [SGTwitterActivity new], [SGMailActivity new]];
+    } else {
+        PreconfiguredActivities = @[[SGTwitterActivity new], [SGMailActivity new]];
     }
+}
+
+- (id)initWithActivityItems:(NSArray *)activityItems applicationActivities:(NSArray *)applicationActivities {
+    NSParameterAssert(activityItems.count > 0);
     
-    self.transform = CGAffineTransformConcat(self.transform, CGAffineTransformMakeScale(1.3, 1.3));
-    self.myWindow.alpha = 0;
-    [UIView animateWithDuration:.35 animations:^{
-        self.myWindow.alpha = 1;
-        self.transform = CGAffineTransformConcat(self.transform, CGAffineTransformMakeScale(1./1.3, 1/1.3));
-    }];
-}
-
-- (void)hide {
-    [UIView animateWithDuration:.35 animations:^{
-        self.transform = CGAffineTransformConcat(self.transform, CGAffineTransformMakeScale(1./1.3, 1/1.3));
-        self.myWindow.alpha = 0;
-    } completion:^(BOOL finished){
-        [self removeFromSuperview];
-        self.myWindow.hidden = YES;
-        self.myWindow = nil;
-    }];
-}
-
-- (void)addImage:(UIImage *)image {
-    if (!self->images)
-        images = [NSMutableArray arrayWithCapacity:5];
-    
-    if (image)
-        [images addObject:image];
-}
-
-- (void)addURL:(NSURL *)url {
-    if (!self->urls)
-        urls = [NSMutableArray arrayWithCapacity:5];
-    
-    if (url)
-        [urls addObject:url];
-}
-
-#pragma mark - Private
-
-- (id)initWithFrame:(CGRect)frame {
-    frame = [UIScreen mainScreen].bounds;
+    CGRect frame = [UIScreen mainScreen].bounds;
     if (self = [super initWithFrame:frame]) {
-        _options = [Services copy];
         _bgColor = [UIColor colorWithWhite:0 alpha:.75];
+        _activityItems = activityItems;
+        _applicationActivities = [NSMutableArray arrayWithCapacity:PreconfiguredActivities.count];
+        [_applicationActivities addObjectsFromArray:applicationActivities];
+        [_applicationActivities addObjectsFromArray:PreconfiguredActivities];
         
         self.backgroundColor = [UIColor clearColor];
         self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
@@ -158,12 +91,59 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
     return self;
 }
 
+- (void)show {
+    [self validateApplicationActivities];
+    //[self.tableView reloadData];
+    
+    self.myWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.myWindow.windowLevel = UIWindowLevelAlert;
+    self.myWindow.backgroundColor = [UIColor colorWithWhite:0 alpha:0.20];
+    self.myWindow.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        
+    UIViewController *vC = [SGShareViewController new];
+    vC.view.frame = [UIScreen mainScreen].bounds;
+    [vC.view addSubview:self];
+    vC.wantsFullScreenLayout = YES;
+    self.myWindow.rootViewController = vC;
+    [self.myWindow makeKeyAndVisible];
+
+    if (!_title) {
+//        if ((self->images != nil) != (self->urls != nil)) {//Xor
+//            if (self->images)
+//                _title  = NSLocalizedString(@"Share Picture", @"Share picture title");
+//            else
+//                _title  = NSLocalizedString(@"Share Page", @"Share url of page");
+//        } else
+            _title = NSLocalizedString(@"Share", @"Share title");
+    }
+    
+    self.transform = CGAffineTransformConcat(self.transform, CGAffineTransformMakeScale(1.3, 1.3));
+    self.myWindow.alpha = 0;
+    [UIView animateWithDuration:.35 animations:^{
+        self.myWindow.alpha = 1;
+        self.transform = CGAffineTransformIdentity;
+    }];
+}
+
+- (void)hide {
+    [UIView animateWithDuration:.35 animations:^{
+        self.transform = CGAffineTransformIdentity;
+        self.myWindow.alpha = 0;
+    } completion:^(BOOL finished){
+        [self removeFromSuperview];
+        self.myWindow.hidden = YES;
+        self.myWindow = nil;
+    }];
+}
+
+#pragma mark - Private
+
 - (void)layoutSubviews {
     CGRect bounds = [UIScreen mainScreen].bounds;
     if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPhone)
         _bgRect = CGRectInset(bounds, bounds.size.width/3.3, bounds.size.height/3.3);
     else
-        _bgRect = CGRectInset(bounds, bounds.size.width*0.1, bounds.size.height*0.15);
+        _bgRect = CGRectInset(bounds, bounds.size.width*0.09, bounds.size.height*0.12);
     
     bounds = self.bounds;
     if (_bgRect.size.height > bounds.size.height)
@@ -180,10 +160,25 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
     self.tableView.frame = tableRect;
 }
 
+- (void)validateApplicationActivities {
+    NSUInteger i = 0;
+    while (i < _applicationActivities.count) {
+        SGActivity *activity = _applicationActivities[i];
+        
+        if ([self.excludedActivityTypes containsObject:[activity activityType]]
+            || ![activity canPerformWithActivityItems:_activityItems]) {
+            
+            [_applicationActivities removeObjectAtIndex:i];
+            continue;
+        }
+        i++;
+    }
+}
+
 #pragma mark - Tableview datasource & delegates
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _options.count;
+    return _applicationActivities.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -198,11 +193,9 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
         cell.imageView.contentMode = UIViewContentModeCenter;
     }
     
-    if ([_options[indexPath.row] respondsToSelector:@selector(objectForKey:)]) {
-        cell.imageView.image = [UIImage imageNamed:_options[indexPath.row][@"img"]];
-        cell.textLabel.text = _options[indexPath.row][@"text"];
-    } else
-        cell.textLabel.text = _options[indexPath.row];
+    SGActivity *activity = _applicationActivities[indexPath.row];
+    cell.imageView.image = activity.activityImage;
+    cell.textLabel.text = activity.activityTitle;
     
     return cell;
 }
@@ -210,20 +203,25 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    NSString* name = _options[indexPath.row][@"text"];
-    if ([_delegate respondsToSelector:@selector(shareView:didSelectService:)])
-        [_delegate shareView:self didSelectService:name];
+    SGActivity *activity = _applicationActivities[indexPath.row];
+    [activity prepareWithActivityItems:_activityItems];
+    activity.completionHandler = _completionHandler;
     
-    //[self hide];
-    
-    SGShareViewCallback handler = _options[indexPath.row][@"handler"];
+    // Dismiss 
     [UIView animateWithDuration:.35 animations:^{
         self.transform = CGAffineTransformConcat(self.transform, CGAffineTransformMakeScale(1./1.3, 1/1.3));
         self.myWindow.alpha = 0;
     } completion:^(BOOL finished){
         self.myWindow.hidden = YES;
-        if (handler)
-            handler(self);
+        
+        UIViewController *viewController = [activity activityViewController];
+        if (viewController) {
+            UIViewController *parent = [[UIApplication sharedApplication].windows[0] rootViewController];
+            viewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            [parent presentViewController:viewController animated:YES completion:NULL];
+        } else {
+            [activity performActivity];
+        }
         
         [self removeFromSuperview];
         self.myWindow = nil;
@@ -233,8 +231,9 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
 #pragma mark - Detect outside touches
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     // tell the delegate the cancellation
-    if ([_delegate respondsToSelector:@selector(shareViewDidCancel:)])
-        [_delegate shareViewDidCancel:self];
+    if (_completionHandler) {
+        _completionHandler(nil, NO);
+    }
     
     // dismiss self
     [self hide];
@@ -280,6 +279,20 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
             withFont:textFont
        lineBreakMode:NSLineBreakByCharWrapping
            alignment:NSTextAlignmentRight];
+}
+
++ (void)addLaunchURLHandler:(SGShareViewLaunchURLHandler)handler {
+    if (!LaunchURLHandler)
+        LaunchURLHandler = [[NSMutableArray alloc] initWithCapacity:5];
+    [LaunchURLHandler addObject:[handler copy]];
+}
+
++ (BOOL)handleURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    for (SGShareViewLaunchURLHandler handler in LaunchURLHandler)
+        if (handler(url, sourceApplication, annotation))
+            return YES;
+    
+    return NO;
 }
 
 @end

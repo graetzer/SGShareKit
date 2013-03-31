@@ -6,18 +6,21 @@ Heavily based on https://github.com/levey/LeveyPopListView
 
 ### Example Usage
 
-SGShareView works like an UIAlertView. For each instance, a new UIWindow is created on top of the main window
-SGShareView does not interfere with your view hierarchy. Just make sure the rootViewController is properly set.
+SGActivityView works like an UIAlertView. For each instance, a new UIWindow is created on top of the main window
+SGActivityView does not interfere with your view hierarchy. Just make sure the rootViewController is properly set.
+The API itself is inspired by UIActivityViewController, but works on iOS 5+ 
 
-	#import "SGShareView.h"
-	#import "SGShareView+UIKit.h"
+In some cases you should be able to reuse your existing UIActivity subclasses by replacing the superclass with SGActivity.
+
+	#import "SGActivityView.h"
 	
 	// ...
-	SGShareView *share = [SGShareView shareView];
-	share.initialText = @"Hello World!";
-	[share addURL:[NSURL URLWithString:@"http://google.com"]];
-	//share.delegate = self;
-	[share show];
+	NSString *text = @"Hello world";
+	NSURL *url = [NSURL URLWithString:@"http://google.com"];
+	NSURL *mail = [NSURL URLWithString:@"mailto:simon@graetzer.org"];
+	SGActivityView *activity = [[SGActivityView alloc] initWithActivityItems:@[text, url, mail]
+	                                                   applicationActivities:nil];
+	[activity show];
 	
 
 ![Logo](https://raw.github.com/graetzer/SGShareKit/master/Demo/screenshot.png)
