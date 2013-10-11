@@ -40,7 +40,12 @@
     button.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     [button addTarget:self action:@selector(showShareController:) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:button];
+    
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_7_0
     self.view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
+#else
+    self.view.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
+#endif
 }
 
 - (IBAction)showShareController:(id)sender {

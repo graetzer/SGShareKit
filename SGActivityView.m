@@ -50,7 +50,7 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
     NSMutableArray *_applicationActivities;
     
     UIWindow *_myWindow;
-    UIWindow *_originalWindow;
+    __weak UIWindow *_originalWindow;
 }
 
 + (void)initialize {
@@ -93,7 +93,7 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
 - (void)show {
     [self validateApplicationActivities];
     
-    _originalWindow = [[UIApplication sharedApplication] keyWindow];
+    _originalWindow = [UIApplication sharedApplication].keyWindow;
     _myWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     _myWindow.windowLevel = UIWindowLevelAlert;
     _myWindow.backgroundColor = [UIColor colorWithWhite:0 alpha:0.20];
@@ -102,12 +102,19 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
     UIViewController *vC = [SGActivityViewController new];
     vC.view.frame = [UIScreen mainScreen].bounds;
     [vC.view addSubview:self];
-    vC.wantsFullScreenLayout = YES;
     _myWindow.rootViewController = vC;
     [_myWindow makeKeyAndVisible];
 
     if (!_title) {
-        _title = NSLocalizedString(@"Share", @"Share title");
+        if (_activityItems.count == 1) {
+            if ([_activityItems[0] isKindOfClass:[UIImage class]]) {
+                _title  = NSLocalizedString(@"Share Picture", @"Share picture title");
+            } else if ([_activityItems[0] isKindOfClass:[NSURL class]]) {
+                _title  = NSLocalizedString(@"Share Page", @"Share url of page");
+            }
+        } else {
+            _title = NSLocalizedString(@"Share", @"Share title"); 
+        }
     }
     
     self.transform = CGAffineTransformConcat(self.transform, CGAffineTransformMakeScale(1.3, 1.3));
@@ -127,13 +134,14 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
         _myWindow.hidden = YES;
         _myWindow.rootViewController = nil;
         _myWindow = nil;
-        [_originalWindow makeKeyWindow];
+        [_originalWindow makeKeyAndVisible];
     }];
 }
 
 #pragma mark - Private
 
 - (void)layoutSubviews {
+    [super layoutSubviews];
     CGRect bounds = [UIScreen mainScreen].bounds;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         _bgRect = CGRectInset(bounds, bounds.size.width*0.10, bounds.size.height*0.21);
@@ -200,7 +208,6 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     SGActivity *activity = _applicationActivities[indexPath.row];
-    [activity prepareWithActivityItems:_activityItems];
     activity.completionHandler = _completionHandler;
     
     // Dismiss 
@@ -209,20 +216,25 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
         _myWindow.alpha = 0;
     } completion:^(BOOL finished){
         _myWindow.hidden = YES;
-        [_originalWindow makeKeyWindow];
+        [_originalWindow makeKeyAndVisible];
         
-        UIViewController *viewController = [activity activityViewController];
-        if (viewController) {
-            UIViewController *parent = [[UIApplication sharedApplication].windows[0] rootViewController];
-            viewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            [parent presentViewController:viewController animated:YES completion:NULL];
-        } else {
-            [activity performActivity];
-        }
-        
-        [self removeFromSuperview];
-        _myWindow.rootViewController = nil;
-        _myWindow = nil;
+        double delayInSeconds = 0.2;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [activity prepareWithActivityItems:_activityItems];
+            
+            UIViewController *viewController = [activity activityViewController];
+            if (viewController) {
+                UIViewController *parent = _originalWindow.rootViewController;
+                viewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+                [parent presentViewController:viewController animated:YES completion:NULL];
+            } else {
+                [activity performActivity];
+            }
+            [self removeFromSuperview];
+            _myWindow.rootViewController = nil;
+            _myWindow = nil;
+        });
     }];
 }
 
@@ -267,16 +279,30 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
     CGPathRelease(path);
     
     // Draw the title and the separator with shadow
+    UIColor *titleColor = [UIColor colorWithRed:0.020 green:0.549 blue:0.961 alpha:1.];
     CGContextSetShadowWithColor(ctx, CGSizeMake(0, 1), 0.5f, [UIColor blackColor].CGColor);
-    [[UIColor colorWithRed:0.020 green:0.549 blue:0.961 alpha:1.] setFill];
-    UIFont *textFont = [UIFont systemFontOfSize:16.];
-    [_title drawInRect:titleRect withFont:textFont];
+    [titleColor setFill];
     CGContextFillRect(ctx, separatorRect);
     
+    UIFont *textFont = [UIFont systemFontOfSize:16.];
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_7_0
+    [_title drawInRect:titleRect withFont:textFont];
+
     [@"x" drawInRect:titleRect
             withFont:textFont
        lineBreakMode:NSLineBreakByCharWrapping
            alignment:NSTextAlignmentRight];
+#else
+    [_title drawInRect:titleRect withAttributes:@{NSFontAttributeName:textFont,
+                                                  NSForegroundColorAttributeName:titleColor}];
+    
+    NSMutableParagraphStyle *para = [[NSMutableParagraphStyle alloc] init];
+    para.alignment = NSTextAlignmentRight;
+    [@"x" drawInRect:titleRect withAttributes:@{
+                                                NSFontAttributeName:textFont,
+                                                NSForegroundColorAttributeName:titleColor,
+                                                NSParagraphStyleAttributeName:para}];
+#endif
 }
 
 + (void)addLaunchURLHandler:(SGShareViewLaunchURLHandler)handler {

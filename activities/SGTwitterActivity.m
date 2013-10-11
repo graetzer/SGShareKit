@@ -38,6 +38,7 @@
     return SGActivityTypePostToTwitter;
 }
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_7_0
 - (BOOL)canPerformWithActivityItems:(NSArray *)activityItems {
     BOOL can = NO;
     for (id item in activityItems) {
@@ -51,21 +52,37 @@
 - (void)prepareWithActivityItems:(NSArray *)activityItems {
     TWTweetComposeViewController *tw = [TWTweetComposeViewController new];
     
+    NSMutableString *initialText = [NSMutableString stringWithCapacity:160];
+    
     for (id item in activityItems) {
         if ([item isKindOfClass:[NSURL class]]) {
             [tw addURL:item];
         } else if ([item isKindOfClass:[NSString class]]) {
-            [tw setInitialText:item];
+            [initialText appendFormat:@"%@\n", item];
         } else if ([item isKindOfClass:[UIImage class]]) {
             [tw addImage:item];
         }
     }
+    [tw setInitialText:initialText];
+    
+    tw.completionHandler = ^(SLComposeViewControllerResult result) {
+        [self activityDidFinish:result == TWTweetComposeViewControllerResultDone];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_viewController dismissViewControllerAnimated:YES completion:NULL];
+        });
+    };
+    
     _viewController = tw;
 }
 
 - (UIViewController *)activityViewController {
     return _viewController;
 }
+#else 
+- (NSString *)serviceType {
+    return SLServiceTypeTwitter;
+}
 
+#endif
 
 @end
