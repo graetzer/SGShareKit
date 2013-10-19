@@ -22,7 +22,7 @@
 #import <Twitter/Twitter.h>
 #import "SGSocialActivity.h"
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_7_0
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_6_0
 @interface SGTwitterActivity : SGActivity
 
 @end

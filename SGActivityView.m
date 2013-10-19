@@ -111,6 +111,8 @@ CGFloat UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientat
                 _title  = NSLocalizedString(@"Share Picture", @"Share picture title");
             } else if ([_activityItems[0] isKindOfClass:[NSURL class]]) {
                 _title  = NSLocalizedString(@"Share Page", @"Share url of page");
+            } else {
+                _title = NSLocalizedString(@"Share", @"Share title");
             }
         } else {
             _title = NSLocalizedString(@"Share", @"Share title"); 
